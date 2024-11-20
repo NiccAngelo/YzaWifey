@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For MyBaby😘</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Add Font Awesome icons -->
+  <style>  
+   body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #dbb4bb;
+  font-family: Arial, sans-serif;
+}
+#spinningDiscContainer {
+  position: absolute;  /* Use absolute positioning to overlap the player container */
+  border: solid 15px #fcfcfc;
+  top: 10%;            /* Center vertically */
+  left:20%;           /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the element */
+  width: 150px;        /* Make the disc larger */
+  height: 150px;       /* Make the disc larger */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;  /* Make it a circle */
+  overflow: hidden;    /* Clip any overflow */
+  box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 1);  /* Create the hole effect */
+}
+
+#spinningDisc {
+  width: 100%;         /* Ensure the image fits the container */
+  height: 100%;        /* Ensure the image fits the container */
+  object-fit: cover;   /* Ensures the image covers the circular container */
+  animation: spin 5s linear infinite; /* Apply the spin animation */
+  border-radius: 50%;  /* Ensure it's circular */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start from 0 degrees */
+  }
+  100% {
+    transform: rotate(360deg); /* End at 360 degrees */
+  }
+}
+
+.play-icon{
+  background: #dbb4bb;
+}
+
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background: #dfe6da;
+  border-radius: 29px;
+  padding: 20px;
+  box-shadow: 9px 9px 7px #75834d, -9px -9px 7px #9fa58e;
+  position: fixed;
+  bottom: 300px; /* Ensure it is at the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.5s ease;
+  opacity: 1;
+  z-index: 10;
+}
+
+
+
+
+#audio {
+  width: 100%;
+  background-color: transparent;
+}
+#audioPlayerContainer {
+  position: fixed;  /* Fixes the player at the bottom */
+  bottom: 0;        /* Aligns it to the bottom of the screen */
+  left: 20;          /* Aligns it to the left edge of the screen */
+  width: 400px;      /* Ensures it takes full width */
+  max-width: 100%;  /* Ensure it's responsive */
+  background-color: #fcfcfc; /* Dark background for container */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+#customControls {
+  position: relative; /* This will make the child elements' absolute positioning relative to this container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the items horizontally (if needed) */
+  justify-content: center;
+  width: 100%; /* Ensure the container takes full width */
+  height: 100px; /* Set a fixed height for the container */
+}
+
+#progressBar {
+  position: absolute;
+  right: 10px; /* Position the progress bar 10px from the right */
+  top: 10px; /* Position the progress bar at the top of the container */
+  width: 100%; /* Set the width of the progress bar */
+}
+
+#playPauseButton {
+  position: absolute;
+  right: 10px; /* Position the button 10px from the right */
+  top: 50px; /* Position the button below the progress bar */
+  margin-top: 10px; /* Adds space between the progress bar and the button */
+  background-color: none;
+  color: #dbb4bb;
+}
+
+
+
+.spinner {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: spin 5s linear infinite;
+  display: none; /* Hidden initially */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+.play-icon {
+  font-size: 30px;
+  color: white;
+  display: block;
+}
+
+.pause-icon {
+  font-size: 30px;
+  color: white;
+  display: none;
+}
+
+
+#customControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background: #dbb4bb;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.photo-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;  /* Lower z-index than the audio player */
+}
+
+
+
+.photo {
+  position: absolute;
+  width: 10vw;
+  height: 20vh;
+  padding-bottom: 5vh;
+  border: 10px solid white;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 1;
+  transform: rotate(-10deg);
+  background: white;
+  transition: transform 0.2s ease, opacity 9s ease;
+}
+
+select, button {
+  padding: 10px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 80%;
+  max-width: 200px;
+  background: #dbb4bb;
+  border: none;
+  border-radius: 29px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+select:focus, button:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.love-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #ff8164;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 5;
+  width: 50px;
+  height: 50px;
+  box-shadow: 29px 29px 57px #75834d, -29px -29px 57px #9fb169;
+  transition: transform 0.3s ease-in-out;
+}
+
+.love-button:hover {
+  transform: scale(1.1);
+}
+
+.love-letter {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #c73853;
+  padding: 20px;
+  border-radius: 29px;
+  display: none;
+  color: white;
+}
+/* Floating Music Icon */
+.music-button {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  background: #ff8164;
+  border: none;
+  width: 50px;
+  height: 50px;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.3s ease-in-out;
+}
+
+.music-button:hover {
+  transform: scale(1.1);
+}
+
+/* Modal for selecting song (initially hidden) */
+.music-player-modal {
+  position: fixed;
+  bottom: 70px; /* Position above the floating button */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  background: #8A9A5B;
+  border-radius: 29px;
+  padding: 20px;
+  box-shadow: 29px 29px 57px #75834d, -29px -29px 57px #9fb169;
+  z-index: 1000;  /* Ensure it's above other elements */
+}
+
+
+.hover-text {
+  position: absolute;
+  bottom: 10%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .photo {
+    width: 20vw;
+    height: 30vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo {
+    width: 40vw;
+    height: 30vh;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div class="player-container" style="display: none;">
+    <select id="songSelect">
+      <option value="">Choose a song...</option>
+      <option value="song1">Blue by Yung Kai</option>
+      <option value="song2">Blue Butterflies by Jin Kazama</option>
+    </select>
+    <button id="playButton">Play</button>
+  </div>
+  
+  <button class="music-button" id="musicButton">
+    <i class="fas fa-music"></i>
+  </button>
+  
+  <div id="audioPlayerContainer" style="display: none; max-width: 500px;">
+    <audio id="audioPlayer">
+      <source id="audioSource" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+    <div id="customControls">
+      <div id="spinningDiscContainer">
+        <img id="spinningDisc" src="images/photo9.jpg" alt="Spinning Disc">
+    </div>
+      <span id="timestamp" style="color: #dbb4bb;">0:00</span>
+      <input type="range" id="progressBar" value="0" min="0" max="100" step="1" onchange="updateCurrentTime(this.value)" style="flex-grow: 1; margin: 0 10px; width: 130px;">
+      <button id="playPauseButton" class="play-pause-btn" onclick="togglePlayPause()">
+        <span id="playPauseIcon" class="play-icon">&#9658;</span> <!-- Play Icon -->
+      </button>
+    </div>
+    
+  </div>
+  
+  
+
+  <div class="photo-container">
+    <!-- Images will appear here -->
+  </div>
+
+  <!-- Icon button for love letter -->
+  <button class="love-button" id="loveButton">
+    <i class="fas fa-envelope"></i>
+  </button>
+
+  <!-- Love letter modal -->
+  <div class="love-letter" id="loveLetter">
+    <h2>VERY SOON BEBII HIHIHI😘😘</h2>
+    <p></p>
+  </div>
+
+  
+  <!-- Music Player Modal (initially hidden) -->
+  <div id="musicPlayerModal" class="music-player-modal" style="display: none;">
+    <select id="songSelect">
+      <option value="">Choose a song...</option>
+      <option value="song1">Song 1</option>
+      <option value="song2">Song 2</option>
+    </select>
+    <button id="playButton">Play</button>
+  </div>
+  
+<div id="audioPlayerContainer" style="display: none;">
+  <div class="audioPlayer">
+   
+  </div>
+</div>
+
+
+  <script>
+    const photoContainer = document.querySelector('.photo-container');
+    const imageUrls = ['images/photo1.jpg', 'images/photo2.jpg', 'images/photo3.jpg','images/photo4.jpg','images/photo5.jpg','images/photo6.jpg','images/photo7.jpg','images/photo8.jpg','images/photo9.jpg','images/photo10.jpg','images/photo11.jpg','images/photo12.jpg','images/photo13.jpg','images/photo14.jpg','images/photo15.jpg'];
+    const songs = {
+      song1: 'songs/blue.mp3',
+      song2: 'songs/bluebutterflies.mp3',
+    };
+  
+    const songSelect = document.getElementById('songSelect');
+    const playButton = document.getElementById('playButton');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioSource = document.getElementById('audioSource');
+    const audioPlayerContainer = document.getElementById('audioPlayerContainer');
+    const playerContainer = document.querySelector('.player-container'); // Get the player container
+    const musicButton = document.getElementById('musicButton');
+    const loveButton = document.getElementById('loveButton');
+    const loveLetter = document.getElementById('loveLetter');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const timestamp = document.getElementById('timestamp');
+    const progressBar = document.getElementById('progressBar');
+    const volumeControl = document.getElementById('volumeControl');
+
+    musicButton.addEventListener('click', () => {
+  if (playerContainer.style.display === 'none') {
+    playerContainer.style.display = 'flex'; // Show the container
+  } else {
+    playerContainer.style.display = 'none'; // Hide the container
+  }
+});
+function togglePlayPause() {
+  const audio = document.getElementById('audioPlayer');
+  const playPauseIcon = document.getElementById('playPauseIcon');
+  const spinner = document.getElementById('spinner');
+  
+  if (audio.paused) {
+    // Start playing the audio
+    audio.play().catch((error) => {
+      console.error('Error playing audio:', error);
+    });
+    
+    // Update play/pause button icon
+    playPauseIcon.innerHTML = '&#10074;&#10074;'; // Change to pause icon (||)
+    
+    // Show the spinner
+    spinner.style.display = 'block';
+  } else {
+    // Pause the audio
+    audio.pause();
+    
+    // Update play/pause button icon
+    playPauseIcon.innerHTML = '&#9658;'; // Change to play icon (▶)
+    
+    // Hide the spinner
+    spinner.style.display = 'none';
+  }
+}
+
+// Event listener to stop the spinner when audio ends
+document.getElementById('audioPlayer').addEventListener('ended', function() {
+  const spinner = document.getElementById('spinner');
+  const playPauseIcon = document.getElementById('playPauseIcon');
+  
+  // Hide the spinner and reset the play button icon when audio ends
+  spinner.style.display = 'none';
+  playPauseIcon.innerHTML = '&#9658;'; // Reset to play icon
+});
+
+
+// Update timestamp
+audioPlayer.addEventListener('timeupdate', function() {
+  const currentTime = audioPlayer.currentTime;
+  const minutes = Math.floor(currentTime / 60);
+  const seconds = Math.floor(currentTime % 60);
+  timestamp.innerHTML = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+  
+  const progress = (currentTime / audioPlayer.duration) * 100;
+  progressBar.value = progress;
+});
+
+// Update current time when progress bar is changed
+function updateCurrentTime(value) {
+  const newTime = (value / 100) * audioPlayer.duration;
+  audioPlayer.currentTime = newTime;
+}
+
+// Set volume
+function setVolume(value) {
+  audioPlayer.volume = value;
+}
+  
+    let currentImageIndex = 0;
+    const imageStack = [];
+    const maxImages = 15;
+    const imageLifetime = 10000;
+  
+    // Handle play button click
+    playButton.addEventListener('click', () => {
+      const selectedSong = songSelect.value;
+      if (selectedSong && songs[selectedSong]) {
+        audioSource.src = songs[selectedSong];
+        audioPlayerContainer.style.display = 'block'; // Show the audio player
+        audioPlayer.load();
+        audioPlayer.play().catch((error) => {
+          console.error('Error playing audio:', error);
+        });
+        photoContainer.style.display = 'block';
+        startImageStack();
+  
+        playerContainer.style.display = 'none'; // Hide the player container
+      } else {
+        alert('Please select a song first.');
+      }
+    });
+  
+    // Love letter button click
+    loveButton.addEventListener('click', () => {
+      loveLetter.style.display = loveLetter.style.display === 'none' ? 'block' : 'none';
+    });
+  
+    function startImageStack() {
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  const handleImageMovement = (event) => {
+    let clientX, clientY;
+    if (event.type === 'mousemove') {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    } else if (event.type === 'touchmove') {
+      const touch = event.touches[0];
+      clientX = touch.clientX;
+      clientY = touch.clientY;
+    }
+
+    const newImage = document.createElement('img');
+    newImage.src = imageUrls[currentImageIndex];
+    newImage.className = 'photo';
+    const offsetX = (Math.random() - 0.5) * 50;
+    const offsetY = (Math.random() - 0.5) * 50;
+    const maxLeft = window.innerWidth - 220;
+    const maxTop = window.innerHeight - 300;
+
+    newImage.style.left = `${Math.min(Math.max(clientX + offsetX - 110, 0), maxLeft)}px`;
+    newImage.style.top = `${Math.min(Math.max(clientY + offsetY - 150, 0), maxTop)}px`;
+
+    const randomRotation = (Math.random() * 35 - 15);
+    newImage.style.transform = `rotate(${randomRotation}deg)`;
+
+    photoContainer.appendChild(newImage);
+    imageStack.push(newImage);
+
+    currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+
+    if (imageStack.length > maxImages) {
+      const oldImage = imageStack.shift();
+      oldImage.style.opacity = 0;
+      setTimeout(() => oldImage.remove(), 5000);
+    }
+
+    setTimeout(() => {
+      newImage.style.opacity = 0;
+      setTimeout(() => newImage.remove(), 5000);
+    }, imageLifetime);
+  };
+
+  if (isTouchDevice) {
+    photoContainer.addEventListener('touchmove', (event) => {
+      event.preventDefault();
+      handleImageMovement(event);
+    });
+  } else {
+    photoContainer.addEventListener('mousemove', handleImageMovement);
+  }
+}
+$(document).ready(function () {
+  var audioElement = document.createElement('audio');
+  audioElement.setAttribute('src', $('.active-song').attr('data-src'));
+
+  var tl = new TimelineMax();
+  tl.to('.audioPlayer .player__albumImg', 3, {
+    rotation: '360deg',
+    repeat: -1,
+    ease: Power0.easeNone
+  }, '-=0.2');
+  tl.pause();
+
+  // Play/Pause Toggle
+  $('.audioPlayer .player__play').click(function () {
+    if ($('.audioPlayer .player').hasClass('play')) {
+      $('.audioPlayer .player').removeClass('play');
+      audioElement.pause();
+      TweenMax.to('.audioPlayer .player__albumImg', 0.2, {
+        scale: 1,
+        ease: Power0.easeNone
+      })
+      tl.pause();
+    } else {
+      $('.audioPlayer .player').addClass('play');
+      audioElement.play();
+      TweenMax.to('.audioPlayer .player__albumImg', 0.2, {
+        scale: 1.1,
+        ease: Power0.easeNone
+      })
+      tl.resume();
+    }
+  });
+
+  var playhead = document.getElementById("playhead");
+  audioElement.addEventListener("timeupdate", function () {
+    var duration = this.duration;
+    var currentTime = this.currentTime;
+    var percentage = (currentTime / duration) * 100;
+    playhead.style.width = percentage + '%';
+  });
+
+ 
+  updateInfo();
+
+  // Next Song
+ 
+  // Previous Song
+
+});
+
+// Function to toggle between play and pause states
+function togglePlayPause() {
+  const audio = document.getElementById('audioPlayer');
+  const playPauseIcon = document.getElementById('playPauseIcon');
+  const spinner = document.getElementById('spinner');
+  
+  if (audio.paused) {
+    audio.play();
+    playPauseIcon.innerHTML = '&#10074;&#10074;'; // Change to pause icon (||)
+    spinner.style.display = 'block'; // Show the spinner
+  } else {
+    audio.pause();
+    playPauseIcon.innerHTML = '&#9658;'; // Change to play icon (▶)
+    spinner.style.display = 'none'; // Hide the spinner
+  }
+}
+
+// Event listener to stop the spinner when audio ends
+document.getElementById('audioPlayer').addEventListener('ended', function() {
+  document.getElementById('spinner').style.display = 'none';
+  document.getElementById('playPauseIcon').innerHTML = '&#9658;'; // Reset to play icon
+});
+
+
+
+  </script>
+  
+
+</body>
+</html>
